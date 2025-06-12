@@ -129,7 +129,7 @@ public class Main {
                         String choiceUpdateOrDelete = Validator.getUD(sc.nextLine());
                         //if choice not valid => break
                         if(choiceUpdateOrDelete == null){
-                            break;
+                            System.out.println(Message.MSG_UD);
                         }
                         // handle
                         switch (choiceUpdateOrDelete) {
@@ -178,6 +178,7 @@ public class Main {
                         break;
                     // report
                     case 4:
+                        studentController.report();
                         break;
                     // exit
                     case 5:

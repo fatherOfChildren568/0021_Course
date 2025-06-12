@@ -24,4 +24,5 @@ public class Message {
     public static final String MSG_DUPLICATE_STUDENT = "Student already register";
     public static final String MSG_UPDATE_OR_DELETE = "Update (U) or Delete (D)";
     public static final String MSG_CHOICE_RECORD = "Choice record: ";
+    public static final String MSG_UD = "Please choice U or D";
 }

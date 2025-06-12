@@ -5,10 +5,13 @@
 package controller;
 
 import model.Student;
+import services.StudentService;
 import view.StudentView;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+
 import dto.DTO;
 
 /**
@@ -20,12 +23,13 @@ public class StudentController {
     private StudentView studentView = new StudentView();
     private DTO input = new DTO();
     private List<Student> listStudent = new ArrayList<>();
+    private StudentService studentService = new StudentService();
 
     // data test
     public void mock() {
         listStudent.add(new Student(1, "Nam", 1, "java"));
         listStudent.add(new Student(1, "nam", 1, "c++"));
-        listStudent.add(new Student(1, "Nam", 1, "be"));
+        listStudent.add(new Student(1, "Nam", 2, "java"));
         listStudent.add(new Student(2, "tien", 2, "c#"));
         listStudent.add(new Student(2, "tien", 2, "java"));
         listStudent.add(new Student(3, "hoang", 3, "fe"));
@@ -285,6 +289,33 @@ public class StudentController {
             }
         }
         return null;
+    }
+
+    //report of list student
+    public void report() {
+        //tranfer list student into service
+        studentService.setListStudent(listStudent);
+        //report
+        Map<String, Integer> map = studentService.courseReport();
+        //header
+        String header = String.format("%-5s%-7s%-10s%-10s\n", "ID", "Name", "Course", "Time of course");
+        studentView.setHeader(header);
+        //init sb to store data
+        StringBuilder sb = new StringBuilder();
+        //display result course
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            String[] student = entry.getKey().split("-");
+            String id = student[0];
+            String name = student[1];
+            String course = student[2];
+            int timeOfCourse = entry.getValue();
+
+            String report = String.format("%-5s%-7s%-10s%-10s\n", id, name, course, timeOfCourse);
+            sb.append(report);
+        }
+        //set body
+        studentView.setBody(sb.toString());
+        studentView.display();
     }
 
 }
